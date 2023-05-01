@@ -1,0 +1,3 @@
+rootProject.name = 'industry-homework-02'
+include 'pokemon-battle-simulator'
+include 'mega-array'
