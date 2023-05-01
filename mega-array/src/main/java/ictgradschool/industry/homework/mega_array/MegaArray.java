@@ -3,66 +3,51 @@ package ictgradschool.industry.homework.mega_array;
 public class MegaArray {
     private String[] data;
     private int head;
-    private int capacity;
 
     public MegaArray() {
-        data = new String[10];
-        head = 0;
-        capacity = 10;
+        this.data = new String[10];
     }
 
     public int getSize() {
-        return head;
+        return this.head;
     }
 
     public int getCapacity() {
-        return capacity;
+        return this.data.length;
     }
 
     public String getItem(int i) {
-        if (i < 0 || i >= head) {
-            throw new IndexOutOfBoundsException("Index out of bounds: " + i);
-        }
-        return data[i];
+        return this.data[i];
     }
 
     public void addItem(String item) {
-        if (this.head == this.capacity) {
-            grow();
+        if (this.head + 1 == this.data.length) {
+            String[] newData = new String[this.data.length * 2];
+            for (int i = 0; i < this.data.length; i++) {
+                newData[i] = this.data[i];
+            }
+            this.data = newData;
         }
-        this.data[this.head++] = item;
-        this.capacity = this.data.length;
+        this.data[head++] = item;
     }
 
     public int indexOf(String item) {
-        for (int i = 0; i < head; i++) {
-            if (data[i].equals(item)) {
+        for (int i = 0; i < this.head; i++) {
+            if (this.data[i].equals(item)) {
                 return i;
             }
         }
         return -1;
     }
 
-    private void grow() {
-        int newCapacity = data.length * 2;
-        String[] newData = new String[newCapacity];
-        for (int i = 0; i < getSize(); i++) {
-            newData[i] = data[i];
-        }
-        data = newData;
-        capacity = newCapacity;
-    }
-
     public void removeItem(String item) {
         int index = indexOf(item);
-        if (index == -1) {
-            return;
+        if (index != -1) {
+            for (int i = index; i < this.head - 1; i++) {
+                this.data[i] = this.data[i + 1];
+            }
+            this.head--;
         }
-        for (int i = index + 1; i < head; i++) {
-            data[i - 1] = data[i];
-        }
-        head--;
-        data[head] = null;
     }
 }
 
